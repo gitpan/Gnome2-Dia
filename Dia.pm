@@ -1,6 +1,6 @@
 package Gnome2::Dia;
 
-# $Header$
+# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/Dia.pm,v 1.2 2004/09/26 12:37:26 kaffeetisch Exp $
 
 use 5.008;
 use strict;
@@ -15,7 +15,7 @@ require DynaLoader;
 
 our @ISA = qw(DynaLoader);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub import {
   my $self = shift();
@@ -35,7 +35,33 @@ Gnome2::Dia - Perl interface to the DiaCanvas2 library
 
 =head1 SYNOPSIS
 
-  # ...
+  use strict;
+  use warnings;
+
+  use Glib qw(TRUE FALSE);
+  use Gtk2 -init;
+  use Gnome2::Dia;
+
+  my $window = Gtk2::Window -> new();
+  my $canvas = Gnome2::Dia::Canvas -> new();
+  my $view = Gnome2::Dia::CanvasView -> new($canvas, TRUE);
+
+  my $box = Gnome2::Dia::CanvasItem -> create("Gnome2::Dia::CanvasBox",
+                                              border_width => 1.5);
+  $canvas -> root -> add($box);
+  $box -> move(100, 100);
+
+  $window -> add($view);
+  $window -> set_default_size(600, 400);
+  $window -> set_title("Sample");
+  $window -> show_all();
+
+  $window -> signal_connect(delete_event => sub {
+    Gtk2 -> main_quit();
+    return FALSE;
+  });
+
+  Gtk2 -> main();
 
 =head1 ABSTRACT
 

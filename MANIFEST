@@ -1,15 +1,17 @@
 ChangeLog
 Dia.pm
 LICENSE
-MANIFEST
+MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
 Makefile.PL
+NEWS
 README
 copyright.pod
 diacanvas.doctypes
 diacanvas.typemap
 diacanvas2perl.h
+examples/editor.pl
 maps
 t/Dia.t
 t/DiaCanvas.t

@@ -4,7 +4,7 @@ use Gnome2::Dia;
 
 use Test::More tests => 15;
 
-# $Header$
+# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/t/DiaCanvasView.t,v 1.1 2004/09/14 17:54:17 kaffeetisch Exp $
 
 Gtk2 -> init();
 
@@ -69,7 +69,13 @@ SKIP: {
 
   my $shape = Gnome2::Dia::Shape::Text -> new();
 
-  $view -> start_editing($view_item, $shape);
+  if (Gnome2::Dia -> CHECK_VERSION(0, 13, 2)) {
+    $view -> start_editing($view_item, 23, 42);
+  }
+  else {
+    $view -> start_editing($view_item, $shape);
+  }
+
   $view -> editing_done();
 
   is(Gnome2::Dia::CanvasView -> get_active_view(), undef);

@@ -2,10 +2,10 @@
 use strict;
 use Gnome2::Dia;
 
-# use Test::More tests => 17; # FIXME: Version check.
+# use Test::More tests => 16; # FIXME: Version check.
 use Test::More skip_all => "DiaShape is borken currently";
 
-# $Header$
+# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/t/DiaShape.t,v 1.2 2004/09/26 12:05:57 kaffeetisch Exp $
 
 ###############################################################################
 
@@ -14,10 +14,6 @@ isa_ok($shape, "Gnome2::Dia::Shape");
 isa_ok($shape, "Gnome2::Dia::Shape::Path");
 
 $shape -> request_update();
-
-$shape -> set_visibility("visible");
-is($shape -> get_visibility(), "visible");
-
 $shape -> set_color(23);
 
 ###############################################################################

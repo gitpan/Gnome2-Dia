@@ -1,0 +1,7 @@
+Overview of changes in Gnome2::Dia 0.02
+=======================================
+
+* Add support for implementing the DiaCanvasGroupable interface and for
+  subclassing DiaCanvasItem.
+* Bind and test dia_canvas_item_set_child_of.
+* Add an example program.

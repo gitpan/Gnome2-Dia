@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Header$
+ * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaCanvasItem.xs,v 1.3 2004/09/26 12:05:57 kaffeetisch Exp $
  */
 
 #include "diacanvas2perl.h"
@@ -98,6 +98,35 @@ dia_canvas_item_handles_unwrap (GType type,
                                 SV *sv)
 {
 	return SvDiaCanvasItemHandles (sv);
+}
+
+/* ------------------------------------------------------------------------- */
+
+static void
+dia2perl_canvas_item_update (DiaCanvasItem *item,
+                             gdouble affine[6])
+{
+	dSP;
+
+	ENTER;
+	SAVETMPS;
+	PUSHMARK (SP);
+
+	EXTEND (SP, 7);
+	PUSHs (sv_2mortal (newSVDiaCanvasItem (item)));
+	PUSHs (sv_2mortal (newSVDiaAffine (affine)));
+
+	PUTBACK;
+	call_method ("UPDATE", G_VOID|G_DISCARD);
+
+	FREETMPS;
+	LEAVE;
+}
+
+static void
+dia2perl_canvas_item_class_init (DiaCanvasItemClass *class)
+{
+	class->update = dia2perl_canvas_item_update;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -455,13 +484,81 @@ dia_canvas_item_preserve_property (item, property_name)
 	DiaCanvasItem *item
 	const gchar *property_name
 
-##  Marked as protected
 ##  void dia_canvas_item_set_child_of (DiaCanvasItem *item, DiaCanvasItem *new_parent)
+void
+dia_canvas_item_set_child_of (item, new_parent)
+	DiaCanvasItem *item
+	DiaCanvasItem_ornull *new_parent
+
+# --------------------------------------------------------------------------- #
+
+=for apidoc __hide__
+=cut
+void
+_INSTALL_OVERRIDES (const char *package)
+    PREINIT:
+	GType type;
+	DiaCanvasItemClass *class;
+    CODE:
+	type = gperl_object_type_from_package (package);
+
+	if (!type)
+		croak ("package '%s' is not registered with Gtk2-Perl",
+		       package);
+
+	if (!g_type_is_a (type, DIA_TYPE_CANVAS_ITEM))
+		croak ("%s(%s) is not a DiaCanvasItem",
+		       package, g_type_name (type));
+
+	/* peek should suffice, as the bindings should keep this class
+	 * alive for us. */
+	class = g_type_class_peek (type);
+
+	if (!class)
+		croak ("internal problem: can't peek at type class for %s(%d)",
+		       g_type_name (type), type);
+
+	dia2perl_canvas_item_class_init (class);
+
+=for apidoc Gnome2::Dia::CanvasItem::UPDATE __hide__
+=cut
+
+void
+UPDATE (item, ...)
+	DiaCanvasItem *item
+    ALIAS:
+    PREINIT:
+	DiaCanvasItemClass *class;
+	GType this, parent;
+    CODE:
+	/* look up his parent */
+	this = G_OBJECT_TYPE (item);
+	parent = g_type_parent (this);
+	if (!g_type_is_a (parent, DIA_TYPE_CANVAS_ITEM))
+		croak ("parent of %s is not a DiaCanvasItem",
+		       g_type_name (this));
+
+	/* that's our boy.  call one of his functions. */
+	class = g_type_class_peek (parent);
+
+	switch (ix) {
+	    case 0: /* UPDATE */
+		if (class->update)
+			class->update (item,
+			               SvDiaAffine (ST (1)));
+		break;
+	    default:
+		g_assert_not_reached ();
+	}
+
+# --------------------------------------------------------------------------- #
 
 MODULE = Gnome2::Dia::CanvasItem	PACKAGE = Gnome2::Dia::CanvasText	PREFIX = dia_canvas_text_
 
 BOOT:
 	gperl_set_isa ("Gnome2::Dia::CanvasText", "Gnome2::Dia::CanvasEditable");
+
+# --------------------------------------------------------------------------- #
 
 MODULE = Gnome2::Dia::CanvasItem	PACKAGE = Gnome2::Dia::CanvasLine	PREFIX = dia_canvas_line_
 

@@ -15,17 +15,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Header$
+ * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaPlacementTool.xs,v 1.2 2004/09/25 19:13:30 kaffeetisch Exp $
  */
 
 #include "diacanvas2perl.h"
 
 MODULE = Gnome2::Dia::PlacementTool	PACKAGE = Gnome2::Dia::PlacementTool	PREFIX = dia_placement_tool_
-
-BOOT:
-	PERL_UNUSED_VAR (file);
-
-#if 0
 
 ##  DiaTool * dia_placement_tool_new (GType object_type, const gchar *first_property_name, ...)
 ##  DiaTool * dia_placement_tool_newv (GType object_type, guint n_params, GParameter *params)
@@ -39,6 +34,7 @@ dia_placement_tool_new (class, type, ...)
 	GObjectClass *class = NULL;
 	int i;
     CODE:
+#if DIACANVAS_CHECK_VERSION (0, 13, 2)
 #define FIRST_ARG 2
 	/* Mostly copied from GObject.xs. */
 	object_type = gperl_object_type_from_package (type);
@@ -81,6 +77,7 @@ dia_placement_tool_new (class, type, ...)
 		}
 	}
 #undef FIRST_ARG
+#endif
 
 	RETVAL = dia_placement_tool_newv (object_type, n_params, params);
 
@@ -93,5 +90,3 @@ dia_placement_tool_new (class, type, ...)
 		g_type_class_unref (class);
     OUTPUT:
 	RETVAL
-
-#endif

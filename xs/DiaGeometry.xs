@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Header$
+ * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaGeometry.xs,v 1.1 2004/09/14 17:54:17 kaffeetisch Exp $
  */
 
 #include "diacanvas2perl.h"

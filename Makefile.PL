@@ -6,7 +6,7 @@ use ExtUtils::MakeMaker;
 use Cwd;
 use File::Spec;
 
-# $Header$
+# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/Makefile.PL,v 1.1 2004/09/14 17:54:16 kaffeetisch Exp $
 
 our %build_reqs = (
   'perl-ExtUtils-Depends'   => '0.20',

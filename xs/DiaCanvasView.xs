@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Header$
+ * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaCanvasView.xs,v 1.1 2004/09/14 17:54:17 kaffeetisch Exp $
  */
 
 #include "diacanvas2perl.h"
@@ -170,12 +170,26 @@ dia_canvas_view_find_view_item (view, item)
 ##  Deprecated.
 ##  void dia_canvas_view_gdk_event_to_dia_event (DiaCanvasView *view, DiaCanvasViewItem *item, GdkEvent *gdk_event, DiaEvent *dia_event)
 
+#if DIACANVAS_CHECK_VERSION (0, 13, 2)
+
+##  void dia_canvas_view_start_editing (DiaCanvasView *view, DiaCanvasViewItem *item, gdouble x, gdouble y)
+void
+dia_canvas_view_start_editing (view, item, x, y)
+	DiaCanvasView *view
+	DiaCanvasViewItem *item
+	gdouble x
+	gdouble y
+
+#else /* FIXME: Remove altogether? */
+
 ##  void dia_canvas_view_start_editing (DiaCanvasView *view, DiaCanvasViewItem *item, DiaShapeText *text_shape)
 void
 dia_canvas_view_start_editing (view, item, text_shape)
 	DiaCanvasView *view
 	DiaCanvasViewItem *item
 	DiaShapeText *text_shape
+
+#endif
 
 ##  void dia_canvas_view_editing_done (DiaCanvasView *view)
 void

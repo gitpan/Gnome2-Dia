@@ -2,8 +2,8 @@
 				  Gnome2::Dia
 				 -------------
 
-This module allows you to use the Virtual Terminal Emulation library (libvte
-for short) from Perl.
+This module allows a Perl developer to use the DiaCanvas2 library to create all
+kinds of spiffy diagramming tools.
 
 The canonical API documentation can be found at:
 
