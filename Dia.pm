@@ -1,6 +1,6 @@
 package Gnome2::Dia;
 
-# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/Dia.pm,v 1.3 2004/11/10 18:52:49 kaffeetisch Exp $
+# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/Dia.pm,v 1.4 2005/02/24 17:40:26 kaffeetisch Exp $
 
 use 5.008;
 use strict;
@@ -15,14 +15,14 @@ require DynaLoader;
 
 our @ISA = qw(DynaLoader);
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub import {
   my $self = shift();
   $self -> VERSION(@_);
 }
 
-sub dl_load_flags { 0x01 }
+sub dl_load_flags { $^O eq 'darwin' ? 0x00 : 0x01 }
 
 Gnome2::Dia -> bootstrap($VERSION);
 

@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaCanvasGroup.xs,v 1.1 2004/09/14 17:54:17 kaffeetisch Exp $
+ * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaCanvasGroup.xs,v 1.2 2005/02/20 20:54:05 kaffeetisch Exp $
  */
 
 #include "diacanvas2perl.h"
@@ -110,10 +110,10 @@ dia_canvas_group_lower_item (group, item, pos)
 	DiaCanvasItem *item
 	gint pos
 
-##  gint dia_canvas_group_foreach (DiaCanvasItem *item, DiaCanvasItemForeachFunc func, gpointer data)
+##  gint dia_canvas_group_foreach (DiaCanvasGroup *item, DiaCanvasItemForeachFunc func, gpointer data)
 gint
 dia_canvas_group_foreach (item, func, data=NULL)
-	DiaCanvasItem *item
+	DiaCanvasGroup *item
 	SV *func
 	SV *data
     PREINIT:

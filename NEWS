@@ -1,3 +1,8 @@
+Overview of changes in Gnome2::Dia 0.04
+=======================================
+
+* Update some bits so we continue to work with newer diacanvas2 versions.
+
 Overview of changes in Gnome2::Dia 0.03
 =======================================
 

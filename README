@@ -27,7 +27,7 @@ To install Gnome2::Dia, run the following commands:
 				 Dependencies
 				--------------
 
-Gnome2::Vte depends on:
+Gnome2::Dia depends on:
 
   ExtUtils::Depends
   ExtUtils::PkgConfig
