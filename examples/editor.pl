@@ -99,7 +99,14 @@ sub INIT_INSTANCE {
 
   my $text = Gnome2::Dia::CanvasText -> new(text => "Urgs!", editable => TRUE);
   $text -> set_child_of($self);
-  $text -> signal_connect(event => sub { warn "event: " . join ", ", @_; });
+
+  $text -> signal_connect(editing_done => sub {
+    my ($text, $shape, $new) = @_;
+
+    # $shape -> set_alignment("right");
+    # $shape -> set_affine([cos(90*(3.14/180)), -sin(90*(3.14/180)), cos(90*(3.14/180)), sin(90*(3.14/180)), 0, 0]);
+    $text -> rotate(90);
+  });
 
   $self -> { _children } = [$text];
 }

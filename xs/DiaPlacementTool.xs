@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaPlacementTool.xs,v 1.2 2004/09/25 19:13:30 kaffeetisch Exp $
+ * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaPlacementTool.xs,v 1.3 2004/10/15 16:14:04 kaffeetisch Exp $
  */
 
 #include "diacanvas2perl.h"
@@ -29,15 +29,15 @@ dia_placement_tool_new (class, type, ...)
 	const char *type
     PREINIT:
 	GType object_type;
+    CODE:
+	object_type = gperl_object_type_from_package (type);
+#if DIACANVAS_CHECK_VERSION (0, 14, 0)
+#define FIRST_ARG 2
+{
 	guint n_params = 0;
 	GParameter *params = NULL;
 	GObjectClass *class = NULL;
 	int i;
-    CODE:
-#if DIACANVAS_CHECK_VERSION (0, 13, 2)
-#define FIRST_ARG 2
-	/* Mostly copied from GObject.xs. */
-	object_type = gperl_object_type_from_package (type);
 
 	if (!object_type)
 		croak ("%s is not registered with gperl as an object type",
@@ -76,8 +76,6 @@ dia_placement_tool_new (class, type, ...)
 			params[i].name = key;
 		}
 	}
-#undef FIRST_ARG
-#endif
 
 	RETVAL = dia_placement_tool_newv (object_type, n_params, params);
 
@@ -88,5 +86,10 @@ dia_placement_tool_new (class, type, ...)
 	}
 	if (class)
 		g_type_class_unref (class);
+}
+#undef FIRST_ARG
+#else
+	RETVAL = dia_placement_tool_new (object_type, NULL);
+#endif
     OUTPUT:
 	RETVAL

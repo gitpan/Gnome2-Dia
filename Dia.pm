@@ -1,6 +1,6 @@
 package Gnome2::Dia;
 
-# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/Dia.pm,v 1.2 2004/09/26 12:37:26 kaffeetisch Exp $
+# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/Dia.pm,v 1.3 2004/11/10 18:52:49 kaffeetisch Exp $
 
 use 5.008;
 use strict;
@@ -15,7 +15,7 @@ require DynaLoader;
 
 our @ISA = qw(DynaLoader);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub import {
   my $self = shift();

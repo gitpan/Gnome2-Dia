@@ -4,7 +4,7 @@ use Gnome2::Dia;
 
 use Test::More tests => 6;
 
-# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/t/DiaCanvas.t,v 1.1 2004/09/14 17:54:17 kaffeetisch Exp $
+# $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/t/DiaCanvas.t,v 1.2 2004/10/15 16:14:04 kaffeetisch Exp $
 
 ###############################################################################
 
@@ -61,5 +61,5 @@ $canvas -> clear_redo();
 $canvas -> pop_undo();
 $canvas -> clear_undo();
 
-$canvas -> set_undo_stack_depth(23);
-is($canvas -> get_undo_stack_depth(), 23);
+$canvas -> set_undo_stack_depth(0);
+is($canvas -> get_undo_stack_depth(), 0);

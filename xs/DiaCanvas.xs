@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaCanvas.xs,v 1.1 2004/09/14 17:54:17 kaffeetisch Exp $
+ * $Header: /cvsroot/gtk2-perl/gtk2-perl-xs/Gnome2-Dia/xs/DiaCanvas.xs,v 1.2 2004/11/10 18:41:48 kaffeetisch Exp $
  */
 
 #include "diacanvas2perl.h"
@@ -24,17 +24,15 @@ MODULE = Gnome2::Dia::Canvas	PACKAGE = Gnome2::Dia::Canvas	PREFIX = dia_canvas_
 
 ##  Struct members that have no corresponding properties.
 SV *
-in_undo (canvas)
+root (canvas)
 	DiaCanvas *canvas
     ALIAS:
-	root = 1
-	solver = 2
+	solver = 1
     CODE:
 	RETVAL = &PL_sv_undef;
 	switch (ix) {
-		case 0: RETVAL = newSVuv (canvas->in_undo); break;
-		case 1: RETVAL = newSVDiaCanvasItem (canvas->root); break;
-		case 2: RETVAL = newSVDiaSolver (canvas->solver); break;
+		case 0: RETVAL = newSVDiaCanvasItem (canvas->root); break;
+		case 1: RETVAL = newSVDiaSolver (canvas->solver); break;
 		default: g_assert_not_reached ();
 	}
     OUTPUT:
